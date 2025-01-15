@@ -1,0 +1,37 @@
+<div class="card mt-3">
+  <!-- Defines a date formatting configuration object for use with Intl.DateTimeFormat. -->
+  <% const dateformat = { weekday: 'short', year: 'numeric', month: 'short', day:
+  'numeric'}; %>
+  <!-- Stores raw date data from task -->
+  <% var rawdate = new Date(row.task_due_date); %>
+  <!-- Create a formatted date variable using the dateformat and rawdate variables -->
+  <% var itemdate = new Intl.DateTimeFormat('en-GB', dateformat).format(rawdate); %>
+  <!-- Displays a card of each task on tasks board screen -->
+  <div class="card-body shadow pb-0">
+    <div class="card-body d-flex justify-content-between align-items-center mb-2 p-0">
+      <span class="badge rounded-pill text-bg-danger p-2"
+        ><i class="bi bi-speedometer me-2"></i><%= row.priority_name%></span
+      >
+      <span class="justify-content-end"><%= itemdate %></span>
+    </div>
+    <h5 class="card-title pt-2"><%= row.task_name %></h5>
+    <p class="card-text"><%= row.task_description %></p>
+    <div class="card-body d-flex justify-content-between align-items-center mb-2 p-0">
+      <span class="badge rounded-pill text-bg-success p-2">
+        <%= row.category_name %></span
+      >
+      <!-- TODO: Create route and functionality for editing and marking task as complete -->
+      <div class="d-flex ms-auto">
+        <span class="justify-content-end"
+          ><a class="fs-3 pe-4 edit-task" href="#" data-id="<%= row.task_id %>"
+            ><i class="bi bi-pencil-square"></i></a
+        ></span>
+        <span class="justify-content-end">
+          <a class="fs-3" href="/completetask/<%= row.task_id %>"
+            ><i class="bi bi-check-circle-fill text-success"></i></a
+        ></span>
+      </div>
+      <%- include('edittask') %>
+    </div>
+  </div>
+</div>

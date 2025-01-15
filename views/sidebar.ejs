@@ -1,0 +1,48 @@
+<div
+  class="d-flex flex-column align-items-start px-3 pt-2 bg-dark text-white min-vh-100"
+  id="responsive-sidebar"
+>
+  <a
+    href="/"
+    class="d-flex align-items-center pb-3 pt-3 mb-md-3 ms-4 text-white text-decoration-none"
+  >
+    <span class="fs-3 d-none d-md-inline">TaskTidy</span>
+  </a>
+  <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start">
+    <li class="nav-item">
+      <a
+        href="/"
+        class="nav-link nav-link-hover align-middle px-0 ps-3 pe-3 text-white active-sidebar"
+      >
+        <i class="fs-5 bi-house"></i>
+        <span class="fs-5 ms-1 d-none d-md-inline">Dashboard</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a href="/taskboard" class="nav-link align-middle px-0 ps-3 pe-3 text-white">
+        <i class="fs-5 bi-check-circle"></i>
+        <span class="fs-5 ms-1 d-none d-md-inline">My Tasks</span>
+      </a>
+    </li>
+    <li class="nav-item dropdown">
+      <button
+        class="btn btn-dark dropdown-toggle text-white"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <i class="fs-5 bi-gear"></i>
+        <span class="fs-5 ms-1 d-none d-md-inline">Settings</span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-dark">
+        <li>
+          <a class="dropdown-item" href="#">Profile</a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="#">Logout</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

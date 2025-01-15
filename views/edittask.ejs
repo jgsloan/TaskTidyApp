@@ -1,0 +1,93 @@
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="edittask"
+  tabindex="-1"
+  aria-labelledby="edittask"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Post action dynamically inserted by client side Javscript -->
+      <form method="post" action="#" id="updateform">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5">Edit Task</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="task-title" class="col-form-label">Title</label>
+            <input type="text" class="form-control" id="edit-task-title" name="title" />
+          </div>
+          <div class="mb-3">
+            <label for="task-description" class="col-form-label">Description</label>
+            <textarea
+              type="text"
+              class="form-control"
+              id="edit-task-description"
+              name="description"
+            ></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="task-duedate" class="col-form-label">Due Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="edit-task-due-date"
+              name="duedate"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="task-category" class="col-form-label">Category</label>
+            <select class="form-select" id="edit-task-category" name="category">
+              <option value="" selected disabled hidden>Choose Category</option>
+              <option value="1">Work</option>
+              <option value="2">Personal</option>
+              <option value="3">Study</option>
+              <option value="4">Household</option>
+              <option value="5">Health</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="task-priority" class="col-form-label">Priority</label>
+            <select class="form-select" id="edit-task-priority" name="priority">
+              <option value="" selected disabled hidden>Choose Priority</option>
+              <option value="4">Critical</option>
+              <option value="5">High</option>
+              <option value="6">Medium</option>
+              <option value="7">Low</option>
+              <option value="8">Optional</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="task-status" class="col-form-label">Status</label>
+            <select class="form-select" id="edit-task-status" name="status">
+              <option value="" selected disabled hidden>Choose Status</option>
+              <option value="1">Not Started</option>
+              <option value="2">In Progress</option>
+              <option value="3">Completed</option>
+              <option value="4">Cancelled</option>
+              <option value="5">Overdue</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </form>
+      <div class="modal-footer">
+        <form method="post" action="#" id="deleteform">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,68 @@
+<div class="row">
+  <nav class="navbar pt-3 pb-4 border-bottom">
+    <div class="container-fluid">
+      <form class="d-flex col-6" role="search">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search by task, label or category.."
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+</div>
+<div class="row mt-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a class="text-decoration-none text-black" href="#">Dashboard</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a class="text-decoration-none text-black" href="#">My Tasks</a>
+      </li>
+      <li class="breadcrumb-item" aria-current="page">Board</li>
+    </ol>
+  </nav>
+</div>
+
+<div class="row mt-4">
+  <div class="col d-flex flex-wrap justify-content-between align-item-center">
+    <ul class="nav nav-underline">
+      <li class="nav-item me-2">
+        <a
+          class="nav-link text-decoration-none text-black active ps-4 pe-4"
+          href="/taskboard"
+        >
+          <i class="bi bi-kanban"></i>
+          Board
+        </a>
+      </li>
+      <li class="nav-item me-2">
+        <a class="nav-link text-decoration-none text-black ps-4 pe-4" href="/tasktable">
+          <i class="bi bi-list-task"></i> Table
+        </a>
+      </li>
+      <li class="nav-item me-2">
+        <a
+          class="nav-link text-decoration-none text-black ps-4 pe-4"
+          href="/taskcalendar"
+        >
+          <i class="bi bi-calendar-event"> </i>Calendar
+        </a>
+      </li>
+    </ul>
+    <!-- Button to trigger add task modal -->
+    <button
+      type="button"
+      class="btn text-white shadow"
+      data-bs-toggle="modal"
+      data-bs-target="#addtask"
+      id="add-task"
+    >
+      <strong>+ Add New Task</strong>
+    </button>
+    <%- include('addtask') %>
+  </div>
+</div>

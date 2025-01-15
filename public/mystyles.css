@@ -1,0 +1,101 @@
+body {
+  background-color: #eaf0f9;
+}
+
+.page-container {
+  overflow-y: hidden;
+  height: 100vh;
+}
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 300px;
+  z-index: 1000;
+  padding-top: 20px;
+}
+
+@media (max-width: 800px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100px;
+    z-index: 1000;
+    padding-top: 20px;
+  }
+}
+
+.main-content {
+  margin-left: 400px;
+  padding: 20px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 125px;
+    margin-right: 20px;
+    padding: 20px;
+    overflow-y: auto;
+    height: 100vh;
+  }
+}
+
+.active-sidebar {
+  background-color: #33bb8b !important;
+}
+
+.nav-link:hover {
+  background-color: gray;
+}
+
+.btn:hover {
+  background-color: gray;
+}
+
+.list-group-item:hover {
+  background-color: #33bb8b;
+}
+
+.not-started {
+  background-color: lightblue;
+}
+
+.in-progress {
+  background-color: #fce4c0;
+}
+
+.overdue {
+  background-color: #ff6865;
+}
+
+.complete {
+  background-color: #64e3a1;
+}
+
+.cancelled {
+  background-color: #d0d0d0;
+}
+
+.modal-header {
+  background-color: #33bb8b;
+}
+
+.column-scroll {
+  max-height: 1200px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+#add-task {
+  background-color: #33bb8b;
+}
+
+#task-description {
+  height: 100px;
+}
