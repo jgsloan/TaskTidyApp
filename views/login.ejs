@@ -18,17 +18,51 @@
   </head>
   <body>
     <div class="container-fluid page-container align-content-center">
-      <div class="col-md-4 offset-md-4">
-        <div class="card shadow mx-auto" style="width: 45rem">
-          <div class="card-body">
-            <h3 class="card-title mb-3">Welcome to Task Tidy!</h3>
-            <h5 class="card-title mb-3">Login</h5>
-            <form method="post" action="/login">
-              <input class="form-control mb-3" type="text" placeholder="Username" />
-              <input class="form-control mb-3" type="password" placeholder="Password" />
-              <button type="button" class="btn btn-success">Login</button>
-            </form>
+      <div class="row">
+        <div class="col-6 d-flex align-items-center">
+          <div class="card shadow mx-auto" style="width: 35rem">
+            <div class="card-body">
+              <h3 class="card-title mb-3 mt-5"><strong>Login</strong></h3>
+              <h5 class="card-title mb-5">
+                Don't have an account yet? <a href="#">Sign Up</a>
+              </h5>
+              <form method="post" action="/login">
+                <div class="mb-3">
+                  <label for="email" class="col-form-label"
+                    ><strong>Email Address</strong></label
+                  >
+                  <input
+                    class="form-control form-control-lg mb-3"
+                    type="text"
+                    placeholder="name@example.com"
+                    name="email"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="col-form-label"
+                    ><strong>Password</strong></label
+                  >
+                  <input
+                    class="form-control form-control-lg mb-3"
+                    type="password"
+                    placeholder="Enter Password"
+                    name="password"
+                  />
+                </div>
+                <div class="d-grid mt-5">
+                  <button type="submit" class="btn btn-success btn-lg">Login</button>
+                </div>
+              </form>
+            </div>
           </div>
+        </div>
+        <div class="col-6 d-flex mx-auto align-items-center">
+          <img
+            src="/Images/TaskManagerLoginImage.png"
+            alt="Task Manager Logo"
+            class="img-fluid"
+            style="max-height: 60vh"
+          />
         </div>
       </div>
     </div>

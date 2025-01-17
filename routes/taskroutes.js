@@ -15,5 +15,6 @@ router.post('/addtask', controller.addTask);
 router.post('/completetask/:id', controller.completeTask);
 router.post('/edittask/:id', controller.editTask);
 router.post('/deletetask/:id', controller.deleteTask);
+router.post('/login', controller.postLogin);
 
 module.exports = router;

@@ -142,3 +142,14 @@ exports.completeTask = (req, res) => {
 exports.getLogin = (req, res) => {
   res.render('login');
 };
+
+exports.postLogin = (req, res) => {
+  const { email, password } = req.body;
+  console.log(req.body);
+  const vals = [email, password];
+  console.log(`login values are: ${vals}`);
+
+  const session = req.session;
+  session.isloggedin = true;
+  console.log(session);
+};
