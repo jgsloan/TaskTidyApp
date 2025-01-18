@@ -42,6 +42,14 @@
                   <i class="bi bi-record-circle"></i
                   ><span class="fs-5 ms-2">Not Started</span>
                 </h5>
+                <!-- Loop through tasks -->
+                <% var count = 0; %> <% task.forEach((row) => { %>
+                <!-- Check if status is 'Not Started' -->
+                <% if (row.status_name === "Not Started") { %> <% count ++; %> <% } %> <%
+                }); %>
+                <span class="badge rounded-pill text-bg-light p-2 fs-5">
+                  <%= count %></span
+                >
                 <a href="#" data-bs-toggle="modal" data-bs-target="#addtask"
                   ><i class="bi bi-plus-circle fs-5"></i
                 ></a>
@@ -69,6 +77,14 @@
                   <i class="bi bi-record-circle"></i
                   ><span class="fs-5 ms-2">In Progress</span>
                 </h5>
+                <!-- Loop through tasks -->
+                <% var count = 0; %> <% task.forEach((row) => { %>
+                <!-- Check if status is 'Not Started' -->
+                <% if (row.status_name === "In Progress") { %> <% count ++; %> <% } %> <%
+                }); %>
+                <span class="badge rounded-pill text-bg-light p-2 fs-5">
+                  <%= count %></span
+                >
                 <a href="#" data-bs-toggle="modal" data-bs-target="#addtask"
                   ><i class="bi bi-plus-circle fs-5"></i
                 ></a>
@@ -95,6 +111,14 @@
                   <i class="bi bi-record-circle"></i
                   ><span class="fs-5 ms-2">Overdue</span>
                 </h5>
+                <!-- Loop through tasks -->
+                <% var count = 0; %> <% task.forEach((row) => { %>
+                <!-- Check if status is 'Not Started' -->
+                <% if (row.status_name === "Overdue") { %> <% count ++; %> <% } %> <% });
+                %>
+                <span class="badge rounded-pill text-bg-light p-2 fs-5">
+                  <%= count %></span
+                >
                 <a href="#" data-bs-toggle="modal" data-bs-target="#addtask"
                   ><i class="bi bi-plus-circle fs-5"></i
                 ></a>
@@ -122,6 +146,14 @@
                   <i class="bi bi-record-circle"></i>
                   <span class="fs-5 ms-2">Complete</span>
                 </h5>
+                <!-- Loop through tasks -->
+                <% var count = 0; %> <% task.forEach((row) => { %>
+                <!-- Check if status is 'Not Started' -->
+                <% if (row.status_name === "Completed") { %> <% count ++; %> <% } %> <%
+                }); %>
+                <span class="badge rounded-pill text-bg-light p-2 fs-5">
+                  <%= count %></span
+                >
                 <a href="#" data-bs-toggle="modal" data-bs-target="#addtask"
                   ><i class="bi bi-plus-circle fs-5"></i
                 ></a>
@@ -149,6 +181,14 @@
                   <i class="bi bi-record-circle"></i
                   ><span class="fs-5 ms-2">Cancelled</span>
                 </h5>
+                <!-- Loop through tasks -->
+                <% var count = 0; %> <% task.forEach((row) => { %>
+                <!-- Check if status is 'Not Started' -->
+                <% if (row.status_name === "Cancelled") { %> <% count ++; %> <% } %> <%
+                }); %>
+                <span class="badge rounded-pill text-bg-light p-2 fs-5">
+                  <%= count %></span
+                >
                 <a href="#" data-bs-toggle="modal" data-bs-target="#addtask"
                   ><i class="bi bi-plus-circle fs-5"></i
                 ></a>
