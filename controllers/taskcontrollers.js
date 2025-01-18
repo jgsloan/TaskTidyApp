@@ -1,31 +1,43 @@
 const conn = require('./../utils/dbconn');
 
 exports.getHome = (req, res) => {
-  res.status(200);
-  const selectSQL = 'SELECT * FROM task';
-  conn.query(selectSQL, (err, rows) => {
-    if (err) {
-      throw err;
-    } else {
-      console.log(rows);
-      res.render('dashboard');
-    }
-  });
+  const { isloggedin } = req.session;
+
+  if (isloggedin) {
+    res.status(200);
+    const selectSQL = 'SELECT * FROM task';
+    conn.query(selectSQL, (err, rows) => {
+      if (err) {
+        throw err;
+      } else {
+        console.log(rows);
+        res.render('dashboard');
+      }
+    });
+  } else {
+    res.redirect('/login');
+  }
 };
 
 exports.getTaskBoard = (req, res) => {
-  res.status(200);
-  const selectSQL = `SELECT * FROM task 
-                        INNER JOIN priority ON task.priority_id=priority.priority_id 
-                        INNER JOIN category ON task.category_id=category.category_id 
-                        INNER JOIN status ON task.status_id=status.status_id;`;
-  conn.query(selectSQL, (err, rows) => {
-    if (err) {
-      throw err;
-    } else {
-      res.render('tasksboard', { task: rows });
-    }
-  });
+  const { isloggedin } = req.session;
+
+  if (isloggedin) {
+    res.status(200);
+    const selectSQL = `SELECT * FROM task 
+                          INNER JOIN priority ON task.priority_id=priority.priority_id 
+                          INNER JOIN category ON task.category_id=category.category_id 
+                          INNER JOIN status ON task.status_id=status.status_id;`;
+    conn.query(selectSQL, (err, rows) => {
+      if (err) {
+        throw err;
+      } else {
+        res.render('tasksboard', { task: rows });
+      }
+    });
+  } else {
+    res.redirect('/login');
+  }
 };
 
 exports.getTaskTable = (req, res) => {
@@ -149,7 +161,52 @@ exports.postLogin = (req, res) => {
   const vals = [email, password];
   console.log(`login values are: ${vals}`);
 
-  const session = req.session;
-  session.isloggedin = true;
-  console.log(session);
+  const checkUserSQL = `SELECT * FROM user WHERE user_email_address = ? AND user_password = ?;`;
+
+  conn.query(checkUserSQL, vals, (err, rows) => {
+    if (err) throw err;
+
+    const numrows = rows.length;
+    console.log(numrows);
+    if (numrows > 0) {
+      console.log(rows);
+      const session = req.session;
+      session.isloggedin = true;
+      console.log(session);
+      res.redirect('/');
+    } else {
+      res.redirect('/login');
+    }
+  });
+};
+
+exports.getLogout = (req, res) => {
+  req.session.destroy((err) => {
+    res.redirect('/');
+  });
+};
+
+exports.getRegister = (req, res) => {
+  res.render('register');
+};
+
+exports.postRegister = (req, res) => {
+  const { email, username, firstpassword, secondpassword } = req.body;
+  console.log(req.body);
+  const vals = [email, username, firstpassword];
+
+  if (firstpassword == secondpassword) {
+    const addUserSQL = `INSERT INTO user (user_email_address, username, user_password) 
+                        VALUES (?, ?, ?); `;
+
+    conn.query(addUserSQL, vals, (err, rows) => {
+      if (err) {
+        throw err;
+      } else {
+        res.redirect('/login');
+      }
+    });
+  } else {
+    res.redirect('/register');
+  }
 };

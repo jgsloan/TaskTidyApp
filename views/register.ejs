@@ -22,11 +22,11 @@
         <div class="col-6 d-flex align-items-center">
           <div class="card shadow mx-auto" style="width: 35rem">
             <div class="card-body">
-              <h3 class="card-title mb-3 mt-5"><strong>Login</strong></h3>
+              <h3 class="card-title mb-3 mt-5"><strong>Sign Up</strong></h3>
               <h5 class="card-title mb-5">
-                Don't have an account yet? <a href="/register">Sign Up</a>
+                Already have an account? <a href="/login">Login</a>
               </h5>
-              <form method="post" action="/login">
+              <form method="post" action="/register">
                 <div class="mb-3">
                   <label for="email" class="col-form-label"
                     ><strong>Email Address</strong></label
@@ -39,18 +39,40 @@
                   />
                 </div>
                 <div class="mb-3">
-                  <label for="password" class="col-form-label"
+                  <label for="username" class="col-form-label"
+                    ><strong>Username</strong></label
+                  >
+                  <input
+                    class="form-control form-control-lg mb-3"
+                    type="text"
+                    placeholder="username123"
+                    name="username"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="firstpassword" class="col-form-label"
                     ><strong>Password</strong></label
                   >
                   <input
                     class="form-control form-control-lg mb-3"
                     type="password"
                     placeholder="Enter Password"
-                    name="password"
+                    name="firstpassword"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="secondpassword" class="col-form-label"
+                    ><strong>Password</strong></label
+                  >
+                  <input
+                    class="form-control form-control-lg mb-3"
+                    type="password"
+                    placeholder="Re-Enter Password"
+                    name="secondpassword"
                   />
                 </div>
                 <div class="d-grid mt-5">
-                  <button type="submit" class="btn btn-success btn-lg">Login</button>
+                  <button type="submit" class="btn btn-success btn-lg">Let's Go!</button>
                 </div>
               </form>
             </div>
