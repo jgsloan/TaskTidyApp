@@ -41,8 +41,24 @@ exports.getTaskBoard = (req, res) => {
 };
 
 exports.getTaskTable = (req, res) => {
-  res.status(404);
-  res.send('<h1>Page not ready yet!</h1>');
+  const { isloggedin } = req.session;
+
+  if (isloggedin) {
+    res.status(200);
+    const selectSQL = `SELECT * FROM task 
+                          INNER JOIN priority ON task.priority_id=priority.priority_id 
+                          INNER JOIN category ON task.category_id=category.category_id 
+                          INNER JOIN status ON task.status_id=status.status_id;`;
+    conn.query(selectSQL, (err, rows) => {
+      if (err) {
+        throw err;
+      } else {
+        res.render('taskstable', { task: rows });
+      }
+    });
+  } else {
+    res.redirect('/login');
+  }
 };
 
 exports.addTask = (req, res) => {
