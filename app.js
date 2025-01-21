@@ -21,7 +21,4 @@ app.use('/', router);
 
 app.set('view engine', 'ejs');
 
-app.listen(process.env.PORT, (err) => {
-  if (err) return console.log(err);
-  console.log(`Express Web Server listening on http://localhost:${process.env.PORT}`);
-});
+module.exports = app;

@@ -1,4 +1,4 @@
-// Client side javascript file
+// Client side javascript file for edit task functionality
 
 // Wait for the page to load
 document.addEventListener('DOMContentLoaded', () => {

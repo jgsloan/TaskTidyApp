@@ -92,12 +92,6 @@ body {
   scrollbar-width: thin;
 }
 
-.fill-column {
-  width: 100%; /* Fill column width */
-  height: 100%; /* Fill column height */
-  object-fit: cover; /* Ensures the image covers the space without distortion */
-}
-
 #add-task {
   background-color: #33bb8b;
 }
