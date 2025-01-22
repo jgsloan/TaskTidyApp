@@ -53,9 +53,45 @@
                 <td>TODO</td>
                 <td><%= row.task_due_date %></td>
                 <td>TODO</td>
-                <td><%= row.category_name %></td>
-                <td><%= row.priority_name %></td>
-                <td><%= row.status_name %></td>
+                <td>
+                  <span class="badge rounded-pill text-bg-success p-2"
+                    ><%= row.category_name %></span
+                  >
+                </td>
+                <td>
+                  <% if (row.priority_name === 'High') { %>
+                  <span class="badge rounded-pill text-bg-danger p-2"
+                    ><%= row.priority_name %></span
+                  >
+                  <% } else if (row.priority_name === 'Medium') { %>
+                  <span class="badge rounded-pill text-bg-warning p-2"
+                    ><%= row.priority_name %></span
+                  >
+                  <% } else if (row.priority_name === 'Low') { %>
+                  <span class="badge rounded-pill text-bg-primary p-2"
+                    ><%= row.priority_name %></span
+                  >
+                  <% } %>
+                </td>
+                <td>
+                  <% if (row.status_name === 'Completed') {%>
+                  <span class="badge rounded-pill complete p-2 text-dark"
+                    ><%= row.status_name %></span
+                  >
+                  <% } else if (row.status_name === 'Not Started') { %>
+                  <span class="badge rounded-pill not-started p-2 text-dark"
+                    ><%= row.status_name %></span
+                  >
+                  <% } else if (row.status_name === 'In Progress') { %>
+                  <span class="badge rounded-pill in-progress p-2 text-dark"
+                    ><%= row.status_name %></span
+                  >
+                  <% } else if (row.status_name === 'Cancelled') { %>
+                  <span class="badge rounded-pill cancelled p-2 text-dark"
+                    ><%= row.status_name %></span
+                  >
+                  <% } %>
+                </td>
               </tr>
               <% }); %>
             </tbody>

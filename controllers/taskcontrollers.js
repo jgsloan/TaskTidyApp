@@ -11,7 +11,7 @@ exports.getHome = (req, res) => {
         throw err;
       } else {
         console.log(rows);
-        res.render('dashboard');
+        res.render('dashboard', { currentPage: 'dashboard' });
       }
     });
   } else {
@@ -32,7 +32,7 @@ exports.getTaskBoard = (req, res) => {
       if (err) {
         throw err;
       } else {
-        res.render('tasksboard', { task: rows });
+        res.render('tasksboard', { task: rows, currentPage: 'tasksboard' });
       }
     });
   } else {
@@ -53,7 +53,7 @@ exports.getTaskTable = (req, res) => {
       if (err) {
         throw err;
       } else {
-        res.render('taskstable', { task: rows });
+        res.render('taskstable', { task: rows, currentPage: 'taskstable' });
       }
     });
   } else {

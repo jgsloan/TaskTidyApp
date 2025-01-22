@@ -22,7 +22,11 @@
       <li class="breadcrumb-item">
         <a class="text-decoration-none text-black" href="#">My Tasks</a>
       </li>
+      <% if (currentPage === 'tasksboard') { %>
       <li class="breadcrumb-item" aria-current="page">Board</li>
+      <% } else if (currentPage === 'taskstable') { %>
+      <li class="breadcrumb-item" aria-current="page">Table</li>
+      <% } %>
     </ol>
   </nav>
 </div>
@@ -32,7 +36,7 @@
     <ul class="nav nav-underline">
       <li class="nav-item me-2">
         <a
-          class="nav-link text-decoration-none text-black active ps-4 pe-4"
+          class="nav-link text-decoration-none text-black <%= currentPage === 'tasksboard' ? 'active' : '' %> ps-4 pe-4"
           href="/taskboard"
         >
           <i class="bi bi-kanban"></i>
@@ -40,7 +44,10 @@
         </a>
       </li>
       <li class="nav-item me-2">
-        <a class="nav-link text-decoration-none text-black ps-4 pe-4" href="/tasktable">
+        <a
+          class="nav-link text-decoration-none text-black <%= currentPage === 'taskstable' ? 'active' : '' %> ps-4 pe-4"
+          href="/tasktable"
+        >
           <i class="bi bi-list-task"></i> Table
         </a>
       </li>

@@ -12,7 +12,7 @@
     <li class="nav-item">
       <a
         href="/"
-        class="nav-link nav-link-hover align-middle px-0 ps-3 pe-3 text-white active-sidebar sidebar-link"
+        class="nav-link align-middle px-0 ps-3 pe-3 text-white <%= currentPage === 'dashboard' ? 'active-sidebar' : '' %> sidebar-link"
       >
         <i class="fs-5 bi-house"></i>
         <span class="fs-5 ms-1 d-none d-md-inline">Dashboard</span>
@@ -22,7 +22,7 @@
     <li class="nav-item">
       <a
         href="/taskboard"
-        class="nav-link align-middle px-0 ps-3 pe-3 text-white sidebar-link"
+        class="nav-link align-middle px-0 ps-3 pe-3 text-white sidebar-link <%= currentPage === 'tasksboard' || currentPage === 'taskstable' ? 'active-sidebar' : '' %>"
       >
         <i class="fs-5 bi-check-circle"></i>
         <span class="fs-5 ms-1 d-none d-md-inline">My Tasks</span>

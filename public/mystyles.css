@@ -69,11 +69,6 @@ body {
 .in-progress {
   background-color: #fce4c0;
 }
-
-.overdue {
-  background-color: #ff6865;
-}
-
 .complete {
   background-color: #64e3a1;
 }
