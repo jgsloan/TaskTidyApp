@@ -1,4 +1,5 @@
 const conn = require('./../utils/dbconn');
+const axios = require('axios');
 
 exports.getHome = (req, res) => {
   const { isloggedin } = req.session;
@@ -10,7 +11,6 @@ exports.getHome = (req, res) => {
       if (err) {
         throw err;
       } else {
-        console.log(rows);
         res.render('dashboard', { currentPage: 'dashboard' });
       }
     });
@@ -23,18 +23,17 @@ exports.getTaskBoard = (req, res) => {
   const { isloggedin } = req.session;
 
   if (isloggedin) {
-    res.status(200);
-    const selectSQL = `SELECT * FROM task 
-                          INNER JOIN priority ON task.priority_id=priority.priority_id 
-                          INNER JOIN category ON task.category_id=category.category_id 
-                          INNER JOIN status ON task.status_id=status.status_id;`;
-    conn.query(selectSQL, (err, rows) => {
-      if (err) {
-        throw err;
-      } else {
-        res.render('tasksboard', { task: rows, currentPage: 'tasksboard' });
-      }
-    });
+    const endpoint = 'http://localhost:3002/tasks';
+
+    axios
+      .get(endpoint)
+      .then((response) => {
+        const data = response.data.result;
+        res.render('tasksboard', { task: data, currentPage: 'tasksboard' });
+      })
+      .catch((error) => {
+        console.log(`Error making API request: ${error}`);
+      });
   } else {
     res.redirect('/login');
   }
@@ -44,98 +43,74 @@ exports.getTaskTable = (req, res) => {
   const { isloggedin } = req.session;
 
   if (isloggedin) {
-    res.status(200);
-    const selectSQL = `SELECT * FROM task 
-                          INNER JOIN priority ON task.priority_id=priority.priority_id 
-                          INNER JOIN category ON task.category_id=category.category_id 
-                          INNER JOIN status ON task.status_id=status.status_id;`;
-    conn.query(selectSQL, (err, rows) => {
-      if (err) {
-        throw err;
-      } else {
-        res.render('taskstable', { task: rows, currentPage: 'taskstable' });
-      }
-    });
+    const endpoint = 'http://localhost:3002/tasks';
+
+    axios
+      .get(endpoint)
+      .then((response) => {
+        const data = response.data.result;
+        res.render('taskstable', { task: data, currentPage: 'taskstable' });
+      })
+      .catch((error) => {
+        console.log(`Error naking API request: ${error}`);
+      });
   } else {
     res.redirect('/login');
   }
 };
 
 exports.addTask = (req, res) => {
-  const task_creation_date = new Date().toISOString().slice(0, 10);
-  const user_id = 1;
+  const { isloggedin, user_id } = req.session;
   const { title, description, duedate, category, priority } = req.body;
-  const task_due_date = new Date(duedate).toISOString().slice(0, 10);
-  const vals = [
-    title,
-    description,
-    task_creation_date,
-    task_due_date,
-    category,
-    priority,
-    user_id,
-  ];
+  const vals = { title, description, duedate, category, priority, user_id };
 
-  const insertSQL = `INSERT INTO task (task_name, task_description, task_creation_date, 
-                        task_due_date, category_id, priority_id, user_id) 
-                        VALUES (?,?,?,?,?,?,?)`;
+  if (isloggedin) {
+    const endpoint = 'http://localhost:3002/tasks/new';
 
-  conn.query(insertSQL, vals, (err, rows) => {
-    if (err) {
-      throw err;
-    } else {
-      res.redirect('/taskboard');
-    }
-  });
+    axios
+      .post(endpoint, vals)
+      .then((response) => {
+        const data = response.data;
+        console.log(data);
+        res.redirect('/taskboard');
+      })
+      .catch((error) => {
+        console.log(`Error making API request: ${error}`);
+      });
+  }
 };
 
 exports.getTask = (req, res) => {
   const taskId = req.params.id;
-  console.log(taskId);
 
-  try {
-    const taskQuery = `SELECT * FROM task WHERE task_id = ?`;
+  const endpoint = `http://localhost:3002/tasks/${taskId}`;
 
-    conn.query(taskQuery, [taskId], (err, rows) => {
-      if (rows.length > 0) {
-        console.log('Task Found:', rows[0]); // Log the the first task found
-        res.json(rows[0]); // Send the first row (task) as JSON
-      } else {
-        res.status(404).json({ error: 'Task not found!' });
-      }
+  axios
+    .get(endpoint)
+    .then((response) => {
+      const data = response.data.result;
+      res.json(data);
+    })
+    .catch((error) => {
+      console.log(`Error making API request: ${error}`);
     });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: 'Internal server errror' });
-  }
-};
-
-exports.completeTask = (req, res) => {
-  res.status(404);
-  res.send('<h1>Cannot complete a task yet!</h1>');
-};
-
-exports.get404 = (req, res) => {
-  res.status(404);
-  res.send('<h1>Page not found!</h1>');
 };
 
 exports.editTask = (req, res) => {
-  const task_id = req.params.id;
-  const { title, description, duedate, category, priority, status } = req.body;
-  const task_due_date = new Date(duedate).toISOString().slice(0, 10);
-  const vals = [title, description, task_due_date, category, priority, status, task_id];
+  const taskId = req.params.id;
+  const vals = ({ title, description, duedate, category, priority, status } = req.body);
 
-  const updateSQL = `UPDATE task SET task_name = ?, task_description = ?, task_due_date = ?, category_id =?, priority_id =?, status_id = ? 
-                      WHERE task_id = ? `;
+  const endpoint = `http://localhost:3002/tasks/${taskId}`;
 
-  conn.query(updateSQL, vals, (err, rows) => {
-    if (err) {
-      throw err;
-    } else {
+  axios
+    .patch(endpoint, vals)
+    .then((response) => {
+      console.log(response.data);
       res.redirect('/taskboard');
-    }
-  });
+    })
+    .catch((error) => {
+      console.log(`Error making API request: ${error}`);
+    });
 };
 
 exports.deleteTask = (req, res) => {
@@ -188,6 +163,7 @@ exports.postLogin = (req, res) => {
       console.log(rows);
       const session = req.session;
       session.isloggedin = true;
+      session.user_id = rows[0].user_id;
       console.log(session);
       res.redirect('/');
     } else {
@@ -225,4 +201,9 @@ exports.postRegister = (req, res) => {
   } else {
     res.redirect('/register');
   }
+};
+
+exports.get404 = (req, res) => {
+  res.status(404);
+  res.send('<h1>Page not found!</h1>');
 };

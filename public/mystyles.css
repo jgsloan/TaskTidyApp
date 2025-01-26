@@ -69,6 +69,7 @@ body {
 .in-progress {
   background-color: #fce4c0;
 }
+
 .complete {
   background-color: #64e3a1;
 }

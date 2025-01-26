@@ -27,12 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(task);
 
         // Task data variables
-        const title = task.task_name;
-        const description = task.task_description;
-        const due_date = new Date(task.task_due_date).toISOString().split('T')[0]; // Date reformatted for HTML output
-        const category_id = task.category_id;
-        const priority_id = task.priority_id;
-        const status_id = task.status_id;
+        const title = task[0].task_name;
+        const description = task[0].task_description;
+        const due_date = new Date(task[0].task_due_date).toISOString().slice(0, 10);
+        const category_id = task[0].category_id;
+        const priority_id = task[0].priority_id;
+        const status_id = task[0].status_id;
 
         // Populate modal field
         document.getElementById('edit-task-title').value = title;
