@@ -1,4 +1,3 @@
-const conn = require('./../utils/dbconn');
 const axios = require('axios');
 
 exports.getHome = (req, res) => {
@@ -6,14 +5,7 @@ exports.getHome = (req, res) => {
 
   if (isloggedin) {
     res.status(200);
-    const selectSQL = 'SELECT * FROM task';
-    conn.query(selectSQL, (err, rows) => {
-      if (err) {
-        throw err;
-      } else {
-        res.render('dashboard', { currentPage: 'dashboard' });
-      }
-    });
+    res.render('dashboard', { currentPage: 'dashboard' });
   } else {
     res.redirect('/login');
   }
@@ -114,32 +106,35 @@ exports.editTask = (req, res) => {
 };
 
 exports.deleteTask = (req, res) => {
-  console.log(`Clicked Delete!`);
+  const taskId = req.params.id;
 
-  const task_id = req.params.id;
-  console.log(task_id);
+  const endpoint = `http:/localhost:3002/tasks/${taskId}`;
 
-  const deleteSQL = `DELETE FROM task WHERE task_id = ${task_id}`;
-  conn.query(deleteSQL, (err, rows) => {
-    if (err) {
-      throw err;
-    } else {
+  axios
+    .delete(endpoint)
+    .then((response) => {
+      console.log(response.data);
       res.redirect('/taskboard');
-    }
-  });
+    })
+    .catch((error) => {
+      console.log(`Error making API request: ${error}`);
+    });
 };
 
 exports.completeTask = (req, res) => {
-  const task_id = req.params.id;
+  const taskId = req.params.id;
 
-  const completeSQL = `UPDATE task SET status_id = 3 WHERE task_id = ${task_id}`;
-  conn.query(completeSQL, (err, rows) => {
-    if (err) {
-      throw err;
-    } else {
+  const endpoint = `http://localhost:3002/tasks/complete/${taskId}`;
+
+  axios
+    .patch(endpoint)
+    .then((response) => {
+      console.log(response.data);
       res.redirect('/taskboard');
-    }
-  });
+    })
+    .catch((error) => {
+      console.log(`Error making API request: ${error}`);
+    });
 };
 
 exports.getLogin = (req, res) => {
@@ -147,29 +142,26 @@ exports.getLogin = (req, res) => {
 };
 
 exports.postLogin = (req, res) => {
-  const { email, password } = req.body;
-  console.log(req.body);
-  const vals = [email, password];
-  console.log(`login values are: ${vals}`);
+  const vals = ({ email, password } = req.body);
 
-  const checkUserSQL = `SELECT * FROM user WHERE user_email_address = ? AND user_password = ?;`;
+  const endpoint = `http://localhost:3002/user/login`;
 
-  conn.query(checkUserSQL, vals, (err, rows) => {
-    if (err) throw err;
-
-    const numrows = rows.length;
-    console.log(numrows);
-    if (numrows > 0) {
-      console.log(rows);
+  axios
+    .post(endpoint, vals)
+    .then((response) => {
+      const data = response.data.result;
+      console.log(data);
       const session = req.session;
+
       session.isloggedin = true;
-      session.user_id = rows[0].user_id;
+      session.user_id = data[0].user_id;
       console.log(session);
+
       res.redirect('/');
-    } else {
-      res.redirect('/login');
-    }
-  });
+    })
+    .catch((error) => {
+      console.log(`Error making API request: ${error}`);
+    });
 };
 
 exports.getLogout = (req, res) => {
@@ -179,27 +171,29 @@ exports.getLogout = (req, res) => {
 };
 
 exports.getRegister = (req, res) => {
-  res.render('register');
+  res.render('register', { unmatched: false });
 };
 
 exports.postRegister = (req, res) => {
-  const { email, username, firstpassword, secondpassword } = req.body;
-  console.log(req.body);
-  const vals = [email, username, firstpassword];
+  const vals = ({ email, username, firstpassword, secondpassword } = req.body);
+  console.log(vals);
 
-  if (firstpassword == secondpassword) {
-    const addUserSQL = `INSERT INTO user (user_email_address, username, user_password) 
-                        VALUES (?, ?, ?); `;
+  const endpoint = `http://localhost:3002/user`;
 
-    conn.query(addUserSQL, vals, (err, rows) => {
-      if (err) {
-        throw err;
-      } else {
+  // Check both passwords match - send an unmatched boolean if false
+  if (firstpassword === secondpassword) {
+    axios
+      .post(endpoint, vals)
+      .then((response) => {
+        const data = response.data;
+        console.log(data);
         res.redirect('/login');
-      }
-    });
+      })
+      .catch((error) => {
+        console.log(`Error making API request: ${error}`);
+      });
   } else {
-    res.redirect('/register');
+    res.render('register', { unmatched: true });
   }
 };
 

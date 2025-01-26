@@ -1,6 +1,5 @@
 const express = require('express');
 const controller = require('./../controllers/taskcontrollers');
-const conn = require('./../utils/dbconn');
 const router = express.Router();
 
 router.get('/', controller.getHome);

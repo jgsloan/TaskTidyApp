@@ -61,6 +61,21 @@
                   />
                 </div>
                 <div class="mb-3">
+                  <% if (unmatched) { %>
+                  <div
+                    class="alert alert-warning alert-dismissible fade show"
+                    role="alert"
+                  >
+                    <strong>Whoops!</strong> You should check your passwords! They don't
+                    match.
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="alert"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <% } %>
                   <label for="secondpassword" class="col-form-label"
                     ><strong>Password</strong></label
                   >
