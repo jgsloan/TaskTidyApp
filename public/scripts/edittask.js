@@ -14,6 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const taskId = button.getAttribute('data-id'); // Get task ID from anchor
 
+      // Capture the source page (store in sessionStorage)
+      const sourcePage = window.location.pathname;
+      sessionStorage.setItem('editTaskSource', sourcePage);
+
       try {
         //Fetch task data from the server
         const response = await fetch(`/edittask/${taskId}`);
@@ -35,16 +39,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const status_id = task[0].status_id;
 
         // Populate modal field
-        document.getElementById('edit-task-title').value = title;
+        const inputElement = document.getElementById('edit-task-title');
+        if (inputElement) {
+          inputElement.value = title;
+        } else {
+          console.log('Element not found');
+        }
         document.getElementById('edit-task-description').value = description;
         document.getElementById('edit-task-due-date').value = due_date;
         document.getElementById('edit-task-category').value = category_id;
         document.getElementById('edit-task-priority').value = priority_id;
         document.getElementById('edit-task-status').value = status_id;
 
-        // Update the form's action attribute with the task ID
-        updateForm.action = `/edittask/${taskId}`;
-        deleteForm.action = `/deletetask/${taskId}`;
+        // Update the form's action attribute with the task ID and sent source page as part of the query
+        updateForm.action = `/edittask/${taskId}?source=${encodeURIComponent(
+          sourcePage
+        )}`;
+        deleteForm.action = `/deletetask/${taskId}?source=${encodeURIComponent(
+          sourcePage
+        )}`;
 
         // Programmatically show the modal
         const modal = new bootstrap.Modal(document.getElementById('edittask'));

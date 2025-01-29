@@ -94,11 +94,15 @@ exports.editTask = (req, res) => {
 
   const endpoint = `http://localhost:3002/tasks/${taskId}`;
 
+  // Get the source page from the query parameter, default to '/taskboard' if not provided
+  const redirectPage = req.query.source || '/taskboard';
+  console.log(redirectPage);
+
   axios
     .patch(endpoint, vals)
     .then((response) => {
       console.log(response.data);
-      res.redirect('/taskboard');
+      res.redirect(redirectPage);
     })
     .catch((error) => {
       console.log(`Error making API request: ${error}`);
@@ -110,11 +114,15 @@ exports.deleteTask = (req, res) => {
 
   const endpoint = `http:/localhost:3002/tasks/${taskId}`;
 
+  // Get the source page from the query parameter, default to '/taskboard' if not provided
+  const redirectPage = req.query.source || '/taskboard';
+  console.log(redirectPage);
+
   axios
     .delete(endpoint)
     .then((response) => {
       console.log(response.data);
-      res.redirect('/taskboard');
+      res.redirect(redirectPage);
     })
     .catch((error) => {
       console.log(`Error making API request: ${error}`);

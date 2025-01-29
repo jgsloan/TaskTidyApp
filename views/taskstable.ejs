@@ -45,7 +45,7 @@
               </tr>
             </thead>
             <tbody class="table-group-divider">
-              <% var count = 0; %> <% task.forEach((row) => { %>
+              <% var count = 1; %> <% task.forEach((row) => { %>
               <tr>
                 <th scope="row"><%= count ++; %></th>
                 <td><%= row.task_name %></td>
@@ -92,8 +92,15 @@
                   >
                   <% } %>
                 </td>
+                <td>
+                  <%= console.log(row.task_id); %>
+                  <span class="justify-content-end"
+                    ><a class="fs-3 pe-4 edit-task" href="#" data-id="<%= row.task_id %>"
+                      ><i class="bi bi-pencil-square"></i></a
+                  ></span>
+                </td>
               </tr>
-              <% }); %>
+              <% }); %> <%- include('edittask') %>
             </tbody>
           </table>
         </div>
@@ -106,6 +113,5 @@
     ></script>
 
     <script src="/scripts/edittask.js"></script>
-    <script src="/scripts/sidebar.js"></script>
   </body>
 </html>
