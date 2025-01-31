@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="mystyles.css" />
   </head>
   <body>
+    <!-- Defines a date formatting configuration object for use with Intl.DateTimeFormat. -->
+    <% const dateformat = { weekday: 'short', year: 'numeric', month: 'short', day:
+    'numeric'}; %>
     <div class="container-fluid page-container">
       <div class="row">
         <!-- Sidebar Section -->
@@ -29,80 +32,108 @@
         <%- include('mytasksheader') %>
 
         <div class="row mt-4">
-          <table class="table table-striped table-hover">
-            <thead>
-              <tr class="table-success">
-                <th scope="col">#</th>
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
-                <th scope="col">Created on</th>
-                <th scope="col">Due by</th>
-                <th scope="col">Completed on</th>
-                <th scope="col">Category</th>
-                <th scope="col">Priority</th>
-                <th scope="col">Status</th>
-                <th scope="col">Edit</th>
-              </tr>
-            </thead>
-            <tbody class="table-group-divider">
-              <% var count = 1; %> <% task.forEach((row) => { %>
-              <tr>
-                <th scope="row"><%= count ++; %></th>
-                <td><%= row.task_name %></td>
-                <td><%= row.task_description %></td>
-                <td>TODO</td>
-                <td><%= row.task_due_date %></td>
-                <td>TODO</td>
-                <td>
-                  <span class="badge rounded-pill text-bg-success p-2"
-                    ><%= row.category_name %></span
-                  >
-                </td>
-                <td>
-                  <% if (row.priority_name === 'High') { %>
-                  <span class="badge rounded-pill text-bg-danger p-2"
-                    ><%= row.priority_name %></span
-                  >
-                  <% } else if (row.priority_name === 'Medium') { %>
-                  <span class="badge rounded-pill text-bg-warning p-2"
-                    ><%= row.priority_name %></span
-                  >
-                  <% } else if (row.priority_name === 'Low') { %>
-                  <span class="badge rounded-pill text-bg-primary p-2"
-                    ><%= row.priority_name %></span
-                  >
+          <div class="table-container">
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr class="table-success">
+                  <th scope="col">#</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Created on</th>
+                  <th scope="col">Due by</th>
+                  <th scope="col">Completed on</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Priority</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Edit</th>
+                </tr>
+              </thead>
+              <tbody class="table-group-divider">
+                <% var count = 1; %> <% task.forEach((row) => { %>
+                <tr>
+                  <th class="align-middle" scope="row"><%= count ++; %></th>
+                  <td class="align-middle"><%= row.task_name %></td>
+                  <td class="align-middle"><%= row.task_description %></td>
+
+                  <!-- Stores raw date data from task -->
+                  <% var rawdate = new Date(row.task_creation_date); %>
+                  <!-- Create a formatted date variable using the dateformat and rawdate variables -->
+                  <% var itemdate = new Intl.DateTimeFormat('en-GB',
+                  dateformat).format(rawdate); %>
+                  <td class="align-middle"><%= itemdate %></td>
+
+                  <!-- Stores raw date data from task -->
+                  <% var rawdate = new Date(row.task_due_date); %>
+                  <!-- Create a formatted date variable using the dateformat and rawdate variables -->
+                  <% var itemdate = new Intl.DateTimeFormat('en-GB',
+                  dateformat).format(rawdate); %>
+                  <td class="align-middle"><%= itemdate %></td>
+
+                  <!-- Stores raw date data from task -->
+                  <% if (row.task_completion_date) { %> <% var rawdate = new
+                  Date(row.task_completion_date); %>
+                  <!-- Create a formatted date variable using the dateformat and rawdate variables -->
+                  <% var itemdate = new Intl.DateTimeFormat('en-GB',
+                  dateformat).format(rawdate); %>
+                  <td class="align-middle"><%= itemdate %></td>
+                  <% } else { %>
+                  <td class="align-middle text-center">-</td>
                   <% } %>
-                </td>
-                <td>
-                  <% if (row.status_name === 'Completed') {%>
-                  <span class="badge rounded-pill complete p-2 text-dark"
-                    ><%= row.status_name %></span
-                  >
-                  <% } else if (row.status_name === 'Not Started') { %>
-                  <span class="badge rounded-pill not-started p-2 text-dark"
-                    ><%= row.status_name %></span
-                  >
-                  <% } else if (row.status_name === 'In Progress') { %>
-                  <span class="badge rounded-pill in-progress p-2 text-dark"
-                    ><%= row.status_name %></span
-                  >
-                  <% } else if (row.status_name === 'Cancelled') { %>
-                  <span class="badge rounded-pill cancelled p-2 text-dark"
-                    ><%= row.status_name %></span
-                  >
-                  <% } %>
-                </td>
-                <td>
-                  <%= console.log(row.task_id); %>
-                  <span class="justify-content-end"
-                    ><a class="fs-3 pe-4 edit-task" href="#" data-id="<%= row.task_id %>"
-                      ><i class="bi bi-pencil-square"></i></a
-                  ></span>
-                </td>
-              </tr>
-              <% }); %> <%- include('edittask') %>
-            </tbody>
-          </table>
+
+                  <td>
+                    <span class="badge rounded-pill text-bg-success p-2"
+                      ><%= row.category_name %></span
+                    >
+                  </td>
+                  <td class="align-middle">
+                    <% if (row.priority_name === 'High') { %>
+                    <span class="badge rounded-pill text-bg-danger p-2"
+                      ><%= row.priority_name %></span
+                    >
+                    <% } else if (row.priority_name === 'Medium') { %>
+                    <span class="badge rounded-pill text-bg-warning p-2"
+                      ><%= row.priority_name %></span
+                    >
+                    <% } else if (row.priority_name === 'Low') { %>
+                    <span class="badge rounded-pill text-bg-primary p-2"
+                      ><%= row.priority_name %></span
+                    >
+                    <% } %>
+                  </td>
+                  <td class="align-middle">
+                    <% if (row.status_name === 'Completed') {%>
+                    <span class="badge rounded-pill complete p-2 text-dark"
+                      ><%= row.status_name %></span
+                    >
+                    <% } else if (row.status_name === 'Not Started') { %>
+                    <span class="badge rounded-pill not-started p-2 text-dark"
+                      ><%= row.status_name %></span
+                    >
+                    <% } else if (row.status_name === 'In Progress') { %>
+                    <span class="badge rounded-pill in-progress p-2 text-dark"
+                      ><%= row.status_name %></span
+                    >
+                    <% } else if (row.status_name === 'Cancelled') { %>
+                    <span class="badge rounded-pill cancelled p-2 text-dark"
+                      ><%= row.status_name %></span
+                    >
+                    <% } %>
+                  </td>
+                  <td class="align-middle">
+                    <%= console.log(row.task_id); %>
+                    <span class="justify-content-end"
+                      ><a
+                        class="fs-3 pe-4 edit-task"
+                        href="#"
+                        data-id="<%= row.task_id %>"
+                        ><i class="bi bi-pencil-square"></i></a
+                    ></span>
+                  </td>
+                </tr>
+                <% }); %> <%- include('edittask') %>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

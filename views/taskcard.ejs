@@ -20,11 +20,16 @@
       <span class="badge rounded-pill text-bg-success p-2">
         <%= row.category_name %></span
       >
-     
+
       <div class="d-flex ms-auto">
         <span class="justify-content-end"
-          ><a class="fs-3 pe-4 edit-task" href="#" data-id="<%= row.task_id %>"
-            ><i class="bi bi-pencil-square"></i></a
+          ><a
+            class="fs-3 pe-4 edit-task"
+            href="#"
+            data-id="<%= row.task_id %>"
+            data-role="<%= session.role %>"
+          >
+            <i class="bi bi-pencil-square"></i></a
         ></span>
         <span class="justify-content-end">
           <a class="fs-3" href="/completetask/<%= row.task_id %>"

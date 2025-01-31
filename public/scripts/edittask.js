@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
       event.preventDefault(); // Prevent the anchor's default navigation behaviour
 
       const taskId = button.getAttribute('data-id'); // Get task ID from anchor
+      const role = button.getAttribute('data-role'); // Get role from session data
+      console.log(`This the users role: ${role}`);
 
       // Capture the source page (store in sessionStorage)
       const sourcePage = window.location.pathname;
@@ -27,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Wait for the JSON response from back-end with task information
-        const task = await response.json();
+        const { task, role } = await response.json();
         console.log(task);
 
         // Task data variables
@@ -50,6 +52,14 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('edit-task-category').value = category_id;
         document.getElementById('edit-task-priority').value = priority_id;
         document.getElementById('edit-task-status').value = status_id;
+
+        // Hide delete button if user is not an Admin
+        if (role !== 'Admin') {
+          const deleteButton = document.getElementById('deleteform');
+          if (deleteButton) {
+            deleteButton.style.display = 'none';
+          }
+        }
 
         // Update the form's action attribute with the task ID and sent source page as part of the query
         updateForm.action = `/edittask/${taskId}?source=${encodeURIComponent(

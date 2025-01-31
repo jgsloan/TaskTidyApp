@@ -63,7 +63,7 @@
               <% if (row.status_name === "Not Started") { %>
               <!-- Pass the required variables (row) to the taskcard partial -->
               <!-- Displays a card for each task on tasks board screen -->
-              <%- include('taskcard', { row: row }) %> <% } %> <% }); %>
+              <%- include('taskcard', { row: row, session: session }) %> <% } %> <% }); %>
             </div>
           </div>
 
@@ -97,7 +97,7 @@
               <% if (row.status_name === "In Progress") { %>
               <!-- Pass the required variables (row) to the taskcard partial -->
               <!-- Displays a card for each task on tasks board screen -->
-              <%- include('taskcard', { row: row }) %> <% } %> <% }); %>
+              <%- include('taskcard', { row: row, session: session }) %> <% } %> <% }); %>
             </div>
           </div>
 
@@ -132,7 +132,7 @@
               <% if (row.status_name === "Completed") { %>
               <!-- Pass the required variables (row) to the taskcard partial -->
               <!-- Displays a card for each task on tasks board screen -->
-              <%- include('taskcard', { row: row }) %> <% } %> <% }); %>
+              <%- include('taskcard', { row: row, session: session }) %> <% } %> <% }); %>
             </div>
           </div>
 
@@ -167,7 +167,7 @@
               <% if (row.status_name === "Cancelled") { %>
               <!-- Pass the required variables (row) to the taskcard partial -->
               <!-- Displays a card for each task on tasks board screen -->
-              <%- include('taskcard', { row: row }) %> <% } %> <% }); %>
+              <%- include('taskcard', { row: row, session: session }) %> <% } %> <% }); %>
             </div>
           </div>
         </div>

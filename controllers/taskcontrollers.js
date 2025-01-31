@@ -12,7 +12,8 @@ exports.getHome = (req, res) => {
 };
 
 exports.getTaskBoard = (req, res) => {
-  const { isloggedin } = req.session;
+  const { isloggedin, role } = req.session;
+  console.log(`this if the user role: ${role}`);
 
   if (isloggedin) {
     const endpoint = 'http://localhost:3002/tasks';
@@ -21,7 +22,11 @@ exports.getTaskBoard = (req, res) => {
       .get(endpoint)
       .then((response) => {
         const data = response.data.result;
-        res.render('tasksboard', { task: data, currentPage: 'tasksboard' });
+        res.render('tasksboard', {
+          task: data,
+          currentPage: 'tasksboard',
+          session: { role },
+        });
       })
       .catch((error) => {
         console.log(`Error making API request: ${error}`);
@@ -32,7 +37,8 @@ exports.getTaskBoard = (req, res) => {
 };
 
 exports.getTaskTable = (req, res) => {
-  const { isloggedin } = req.session;
+  const { isloggedin, role } = req.session;
+  console.log(`this if the user role: ${role}`);
 
   if (isloggedin) {
     const endpoint = 'http://localhost:3002/tasks';
@@ -41,7 +47,11 @@ exports.getTaskTable = (req, res) => {
       .get(endpoint)
       .then((response) => {
         const data = response.data.result;
-        res.render('taskstable', { task: data, currentPage: 'taskstable' });
+        res.render('taskstable', {
+          task: data,
+          currentPage: 'taskstable',
+          session: { role },
+        });
       })
       .catch((error) => {
         console.log(`Error naking API request: ${error}`);
@@ -59,12 +69,16 @@ exports.addTask = (req, res) => {
   if (isloggedin) {
     const endpoint = 'http://localhost:3002/tasks/new';
 
+    // Get the source page from the query parameter, default to '/taskboard' if not provided
+    const redirectPage = req.query.source || '/taskboard';
+    console.log(redirectPage);
+
     axios
       .post(endpoint, vals)
       .then((response) => {
         const data = response.data;
         console.log(data);
-        res.redirect('/taskboard');
+        res.redirect(redirectPage);
       })
       .catch((error) => {
         console.log(`Error making API request: ${error}`);
@@ -74,6 +88,7 @@ exports.addTask = (req, res) => {
 
 exports.getTask = (req, res) => {
   const taskId = req.params.id;
+  const { role } = req.session;
 
   const endpoint = `http://localhost:3002/tasks/${taskId}`;
 
@@ -81,7 +96,7 @@ exports.getTask = (req, res) => {
     .get(endpoint)
     .then((response) => {
       const data = response.data.result;
-      res.json(data);
+      res.json({ task: data, role: role });
     })
     .catch((error) => {
       console.log(`Error making API request: ${error}`);
@@ -163,6 +178,7 @@ exports.postLogin = (req, res) => {
 
       session.isloggedin = true;
       session.user_id = data[0].user_id;
+      session.role = data[0].role_type;
       console.log(session);
 
       res.redirect('/');
