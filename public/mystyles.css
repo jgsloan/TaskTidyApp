@@ -66,6 +66,10 @@ body {
   background-color: lightblue;
 }
 
+.not-started-text {
+  color: lightblue;
+}
+
 .in-progress {
   background-color: #fce4c0;
 }

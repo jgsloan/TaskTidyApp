@@ -1,21 +1,54 @@
 const axios = require('axios');
 
 exports.getHome = (req, res) => {
-  const { isloggedin } = req.session;
+  const { isloggedin, role, user_id, name } = req.session;
+  console.log(`this is the user role: ${role}`);
+  console.log(`This is the user id: ${user_id}`);
+  console.log(`This is the users name: ${name}`);
 
-  if (isloggedin) {
-    res.status(200);
-    res.render('dashboard', { currentPage: 'dashboard' });
+  if (isloggedin && role === 'Admin') {
+    const endpoint = 'http://localhost:3002/tasks';
+
+    axios
+      .get(endpoint)
+      .then((response) => {
+        const data = response.data.result;
+        res.render('dashboard', {
+          task: data,
+          currentPage: 'dashboard',
+          session: { role, name },
+        });
+      })
+      .catch((error) => {
+        console.log(`Error making API request: ${error}`);
+      });
+  } else if (isloggedin) {
+    const endpoint = `http://localhost:3002/tasks/user/${user_id}`;
+
+    axios
+      .get(endpoint)
+      .then((response) => {
+        const data = response.data.result;
+        res.render('dashboard', {
+          task: data,
+          currentPage: 'dashboard',
+          session: { role, name },
+        });
+      })
+      .catch((error) => {
+        console.log(`Error making API request: ${error}`);
+      });
   } else {
     res.redirect('/login');
   }
 };
 
 exports.getTaskBoard = (req, res) => {
-  const { isloggedin, role } = req.session;
+  const { isloggedin, role, user_id } = req.session;
   console.log(`this if the user role: ${role}`);
+  console.log(`This is the user id: ${user_id}`);
 
-  if (isloggedin) {
+  if (isloggedin && role === 'Admin') {
     const endpoint = 'http://localhost:3002/tasks';
 
     axios
@@ -25,7 +58,23 @@ exports.getTaskBoard = (req, res) => {
         res.render('tasksboard', {
           task: data,
           currentPage: 'tasksboard',
-          session: { role },
+          session: { role, user_id },
+        });
+      })
+      .catch((error) => {
+        console.log(`Error making API request: ${error}`);
+      });
+  } else if (isloggedin) {
+    const endpoint = `http://localhost:3002/tasks/user/${user_id}`;
+
+    axios
+      .get(endpoint)
+      .then((response) => {
+        const data = response.data.result;
+        res.render('tasksboard', {
+          task: data,
+          currentPage: 'tasksboard',
+          session: { role, user_id },
         });
       })
       .catch((error) => {
@@ -37,10 +86,11 @@ exports.getTaskBoard = (req, res) => {
 };
 
 exports.getTaskTable = (req, res) => {
-  const { isloggedin, role } = req.session;
+  const { isloggedin, role, user_id } = req.session;
   console.log(`this if the user role: ${role}`);
+  console.log(`This is the user id: ${user_id}`);
 
-  if (isloggedin) {
+  if (isloggedin && role === 'Admin') {
     const endpoint = 'http://localhost:3002/tasks';
 
     axios
@@ -50,11 +100,72 @@ exports.getTaskTable = (req, res) => {
         res.render('taskstable', {
           task: data,
           currentPage: 'taskstable',
-          session: { role },
+          session: { role, user_id },
         });
       })
       .catch((error) => {
         console.log(`Error naking API request: ${error}`);
+      });
+  } else if (isloggedin) {
+    const endpoint = `http://localhost:3002/tasks/user/${user_id}`;
+
+    axios
+      .get(endpoint)
+      .then((response) => {
+        const data = response.data.result;
+        res.render('taskstable', {
+          task: data,
+          currentPage: 'taskstable',
+          session: { role, user_id },
+        });
+      })
+      .catch((error) => {
+        console.log(`Error making API request: ${error}`);
+      });
+  } else {
+    res.redirect('/login');
+  }
+};
+
+exports.getSortedTasks = (req, res) => {
+  const { isloggedin, role, user_id } = req.session;
+  const query = req.query.sort;
+  console.log('🔍 Full request URL:', req.originalUrl);
+  console.log(`This is the content of the query string: ${query}`);
+  console.log(`this if the user role: ${role}`);
+  console.log(`This is the user id: ${user_id}`);
+
+  if (isloggedin && role === 'Admin') {
+    const endpoint = `http://localhost:3002/sort/${user_id}?sort=${query}`;
+
+    axios
+      .get(endpoint)
+      .then((response) => {
+        const data = response.data.result;
+        res.render('taskstable', {
+          task: data,
+          currentPage: 'taskstable',
+          session: { role, user_id },
+        });
+      })
+      .catch((error) => {
+        console.log(`Error making API request: ${error}`);
+      });
+  } else if (isloggedin) {
+    const endpoint = `http://localhost:3002/sort/${user_id}?sort=${query}`;
+
+    axios
+      .get(endpoint)
+      .then((response) => {
+        const data = response.data.result;
+        res.render('taskstable', {
+          task: data,
+          currentPage: 'taskstable',
+          session: { role, user_id },
+        });
+      })
+      .catch((error) => {
+        console.log(`Error making API request: ${error}`);
       });
   } else {
     res.redirect('/login');
@@ -179,6 +290,7 @@ exports.postLogin = (req, res) => {
       session.isloggedin = true;
       session.user_id = data[0].user_id;
       session.role = data[0].role_type;
+      session.name = data[0].name;
       console.log(session);
 
       res.redirect('/');
@@ -199,7 +311,7 @@ exports.getRegister = (req, res) => {
 };
 
 exports.postRegister = (req, res) => {
-  const vals = ({ email, username, firstpassword, secondpassword } = req.body);
+  const vals = ({ name, email, username, firstpassword, secondpassword } = req.body);
   console.log(vals);
 
   const endpoint = `http://localhost:3002/user`;

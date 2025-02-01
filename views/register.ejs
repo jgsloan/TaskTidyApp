@@ -14,7 +14,7 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="mystyles.css" />
+    <link rel="stylesheet" href="/mystyles.css" />
   </head>
   <body>
     <div class="container-fluid page-container align-content-center">
@@ -28,6 +28,15 @@
               </h5>
               <form method="post" action="/register">
                 <div class="mb-3">
+                  <label for="name" class="col-form-label"><strong>Name</strong></label>
+                  <input
+                    class="form-control form-control-lg mb-3"
+                    type="text"
+                    placeholder="E.g. John Smith"
+                    name="name"
+                  />
+                </div>
+                <div class="mb-3">
                   <label for="email" class="col-form-label"
                     ><strong>Email Address</strong></label
                   >
@@ -38,6 +47,7 @@
                     name="email"
                   />
                 </div>
+
                 <div class="mb-3">
                   <label for="username" class="col-form-label"
                     ><strong>Username</strong></label

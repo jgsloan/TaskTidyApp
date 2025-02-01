@@ -10,6 +10,7 @@ router.get('/completetask/:id', controller.completeTask);
 router.get('/login', controller.getLogin);
 router.get('/logout', controller.getLogout);
 router.get('/register', controller.getRegister);
+router.get('/sort/:id', controller.getSortedTasks);
 router.get('*', controller.get404);
 
 router.post('/addtask', controller.addTask);
