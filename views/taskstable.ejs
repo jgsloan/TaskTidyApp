@@ -77,10 +77,134 @@
                       ></a>
                     </span>
                   </th>
-                  <th scope="col">Category</th>
-                  <th scope="col">Priority</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Edit</th>
+                  <th scope="col">
+                    <span class="dropdown d-flex justify-content-between"
+                      >Category<a
+                        class="fs-5 dropdown-toggle"
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        ><i class="bi bi-funnel"></i
+                      ></a>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            href="/categoryfilter/<%= session.user_id %>?filter=Work"
+                            >Work</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            href="/categoryfilter/<%= session.user_id %>?filter=Personal"
+                            >Personal</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            href="/categoryfilter/<%= session.user_id %>?filter=Study"
+                            >Study</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            href="/categoryfilter/<%= session.user_id %>?filter=Household"
+                            >Household</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            href="/categoryfilter/<%= session.user_id %>?filter=Health"
+                            >Health</a
+                          >
+                        </li>
+                      </ul>
+                    </span>
+                  </th>
+
+                  <th scope="col">
+                    <span class="dropdown d-flex justify-content-between"
+                      >Priority<a
+                        class="fs-5 dropdown-toggle"
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        ><i class="bi bi-funnel"></i
+                      ></a>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            href="/filter/<%= session.user_id %>?filter=High"
+                            >High</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            href="/filter/<%= session.user_id %>?filter=Medium"
+                            >Medium</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            href="/filter/<%= session.user_id %>?filter=Low"
+                            >Low</a
+                          >
+                        </li>
+                      </ul>
+                    </span>
+                  </th>
+                  <th scope="col">
+                    <span class="dropdown d-flex justify-content-between"
+                      >Status<a
+                        class="fs-5 dropdown-toggle"
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        ><i class="bi bi-funnel"></i
+                      ></a>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            href="/filter/<%= session.user_id %>?filter=Not Started"
+                            >Not Started</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            href="/filter/<%= session.user_id %>?filter=In Progress"
+                            >In Progress</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            href="/filter/<%= session.user_id %>?filter=Completed"
+                            >Completed</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            href="/filter/<%= session.user_id %>?filter=Cancelled"
+                            >Cancelled</a
+                          >
+                        </li>
+                      </ul>
+                    </span>
+                  </th>
+                  <th scope="col" class="text-center">Edit</th>
                 </tr>
               </thead>
               <tbody class="table-group-divider">
@@ -162,6 +286,10 @@
                         href="#"
                         data-id="<%= row.task_id %>"
                         ><i class="bi bi-pencil-square"></i></a
+                    ></span>
+                    <span class="justify-content-end"
+                      ><a class="fs-3" href="/completetask/<%= row.task_id %>"
+                        ><i class="bi bi-check-circle-fill text-success"></i></a
                     ></span>
                   </td>
                 </tr>

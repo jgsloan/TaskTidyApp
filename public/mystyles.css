@@ -94,6 +94,7 @@ body {
 
 /* scrollable table */
 .table-container {
+  min-height: 250px;
   max-height: 1200px;
   overflow-y: auto;
 }

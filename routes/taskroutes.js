@@ -11,6 +11,9 @@ router.get('/login', controller.getLogin);
 router.get('/logout', controller.getLogout);
 router.get('/register', controller.getRegister);
 router.get('/sort/:id', controller.getSortedTasks);
+router.get('/categoryfilter/:id', controller.filterTasksByCategory);
+router.get('/priorityfilter/:id', controller.filterTasksByPriority);
+router.get('/statusfilter/:id', controller.filterTasksByStatus);
 router.get('*', controller.get404);
 
 router.post('/addtask', controller.addTask);

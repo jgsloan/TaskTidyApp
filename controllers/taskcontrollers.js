@@ -132,7 +132,7 @@ exports.getSortedTasks = (req, res) => {
   const query = req.query.sort;
   console.log('🔍 Full request URL:', req.originalUrl);
   console.log(`This is the content of the query string: ${query}`);
-  console.log(`this if the user role: ${role}`);
+  console.log(`this is the user role: ${role}`);
   console.log(`This is the user id: ${user_id}`);
 
   if (isloggedin && role === 'Admin') {
@@ -171,6 +171,55 @@ exports.getSortedTasks = (req, res) => {
     res.redirect('/login');
   }
 };
+
+exports.filterTasksByCategory = (req, res) => {
+  const { isloggedin, role, user_id } = req.session;
+  const query = req.query.filter;
+  console.log('🔍 Full request URL:', req.originalUrl);
+  console.log(`This is the content of the query string: ${query}`);
+  console.log(`this is the user role: ${role}`);
+  console.log(`This is the user id: ${user_id}`);
+
+  if (isloggedin && role === 'Admin') {
+    const endpoint = `http://localhost:3002/categoryfilter/${user_id}?filter=${query}`;
+
+    axios
+      .get(endpoint)
+      .then((response) => {
+        const data = response.data.result;
+        res.render('taskstable', {
+          task: data,
+          currentPage: 'taskstable',
+          session: { role, user_id },
+        });
+      })
+      .catch((error) => {
+        console.log(`Error making API request: ${error}`);
+      });
+  } else if (isloggedin) {
+    const endpoint = `http://localhost:3002/filter/${user_id}?filter=${query}`;
+
+    axios
+      .get(endpoint)
+      .then((response) => {
+        const data = response.data.result;
+        res.render('taskstable', {
+          task: data,
+          currentPage: 'taskstable',
+          session: { role, user_id },
+        });
+      })
+      .catch((error) => {
+        console.log(`Error making API request: ${error}`);
+      });
+  } else {
+    res.redirect('/login');
+  }
+};
+
+exports.filterTasksByPriority = (req, res) => {};
+
+exports.filterTasksByStatus = (req, res) => {};
 
 exports.addTask = (req, res) => {
   const { isloggedin, user_id } = req.session;
