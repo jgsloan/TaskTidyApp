@@ -85,42 +85,49 @@
                         role="button"
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
+                        id="category-id"
                         ><i class="bi bi-funnel"></i
                       ></a>
                       <ul class="dropdown-menu">
+                        <% var filterType = 'category'; %>
                         <li>
                           <a
                             class="dropdown-item"
-                            href="/categoryfilter/<%= session.user_id %>?filter=Work"
+                            href="/filter/<%= session.user_id %>?type=<%= filterType %>&filter=Work"
                             >Work</a
                           >
                         </li>
                         <li>
                           <a
                             class="dropdown-item"
-                            href="/categoryfilter/<%= session.user_id %>?filter=Personal"
+                            href="/filter/<%= session.user_id %>?type=<%= filterType %>&filter=Personal"
                             >Personal</a
                           >
                         </li>
                         <li>
                           <a
                             class="dropdown-item"
-                            href="/categoryfilter/<%= session.user_id %>?filter=Study"
+                            href="/filter/<%= session.user_id %>?type=<%= filterType %>&filter=Study"
                             >Study</a
                           >
                         </li>
                         <li>
                           <a
                             class="dropdown-item"
-                            href="/categoryfilter/<%= session.user_id %>?filter=Household"
+                            href="/filter/<%= session.user_id %>?type=<%= filterType %>&filter=Household"
                             >Household</a
                           >
                         </li>
                         <li>
                           <a
                             class="dropdown-item"
-                            href="/categoryfilter/<%= session.user_id %>?filter=Health"
+                            href="/filter/<%= session.user_id %>?type=<%= filterType %>&filter=Health"
                             >Health</a
+                          >
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="/tasktable"
+                            ><i class="bi bi-ban pe-2 text-danger"></i>Clear Filter</a
                           >
                         </li>
                       </ul>
@@ -135,28 +142,35 @@
                         role="button"
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
+                        id="priority-filter"
                         ><i class="bi bi-funnel"></i
                       ></a>
                       <ul class="dropdown-menu">
+                        <% var filterType = 'priority'; %>
                         <li>
                           <a
                             class="dropdown-item"
-                            href="/filter/<%= session.user_id %>?filter=High"
+                            href="/filter/<%= session.user_id %>?type=<%= filterType %>&filter=High"
                             >High</a
                           >
                         </li>
                         <li>
                           <a
                             class="dropdown-item"
-                            href="/filter/<%= session.user_id %>?filter=Medium"
+                            href="/filter/<%= session.user_id %>?type=<%= filterType %>&filter=Medium"
                             >Medium</a
                           >
                         </li>
                         <li>
                           <a
                             class="dropdown-item"
-                            href="/filter/<%= session.user_id %>?filter=Low"
+                            href="/filter/<%= session.user_id %>?type=<%=filterType %>&filter=Low"
                             >Low</a
+                          >
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="/tasktable"
+                            ><i class="bi bi-ban pe-2 text-danger"></i>Clear Filter</a
                           >
                         </li>
                       </ul>
@@ -170,35 +184,42 @@
                         role="button"
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
+                        id="status-id"
                         ><i class="bi bi-funnel"></i
                       ></a>
                       <ul class="dropdown-menu">
+                        <% var filterType = 'status'; %>
                         <li>
                           <a
                             class="dropdown-item"
-                            href="/filter/<%= session.user_id %>?filter=Not Started"
+                            href="/filter/<%= session.user_id %>?type=<%= filterType %>&filter=Not Started"
                             >Not Started</a
                           >
                         </li>
                         <li>
                           <a
                             class="dropdown-item"
-                            href="/filter/<%= session.user_id %>?filter=In Progress"
+                            href="/filter/<%= session.user_id %>?type=<%= filterType %>&filter=In Progress"
                             >In Progress</a
                           >
                         </li>
                         <li>
                           <a
                             class="dropdown-item"
-                            href="/filter/<%= session.user_id %>?filter=Completed"
+                            href="/filter/<%= session.user_id %>?type=<%= filterType %>&filter=Completed"
                             >Completed</a
                           >
                         </li>
                         <li>
                           <a
                             class="dropdown-item"
-                            href="/filter/<%= session.user_id %>?filter=Cancelled"
+                            href="/filter/<%= session.user_id %>?type=<%= filterType %>&filter=Cancelled"
                             >Cancelled</a
+                          >
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="/tasktable"
+                            ><i class="bi bi-ban pe-2 text-danger"></i>Clear Filter</a
                           >
                         </li>
                       </ul>

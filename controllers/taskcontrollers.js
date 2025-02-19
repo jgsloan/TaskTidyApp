@@ -172,16 +172,19 @@ exports.getSortedTasks = (req, res) => {
   }
 };
 
-exports.filterTasksByCategory = (req, res) => {
+exports.filterTasks = (req, res) => {
   const { isloggedin, role, user_id } = req.session;
   const query = req.query.filter;
+  const filterType = req.query.type;
+
   console.log('🔍 Full request URL:', req.originalUrl);
   console.log(`This is the content of the query string: ${query}`);
+  console.log(`The filter type is: ${filterType}`);
   console.log(`this is the user role: ${role}`);
   console.log(`This is the user id: ${user_id}`);
 
   if (isloggedin && role === 'Admin') {
-    const endpoint = `http://localhost:3002/categoryfilter/${user_id}?filter=${query}`;
+    const endpoint = `http://localhost:3002/filter/${user_id}?type=${filterType}&filter=${query}`;
 
     axios
       .get(endpoint)
@@ -197,7 +200,7 @@ exports.filterTasksByCategory = (req, res) => {
         console.log(`Error making API request: ${error}`);
       });
   } else if (isloggedin) {
-    const endpoint = `http://localhost:3002/filter/${user_id}?filter=${query}`;
+    const endpoint = `http://localhost:3002/filter/${user_id}?type=${filterType}&filter=${query}`;
 
     axios
       .get(endpoint)
@@ -216,10 +219,6 @@ exports.filterTasksByCategory = (req, res) => {
     res.redirect('/login');
   }
 };
-
-exports.filterTasksByPriority = (req, res) => {};
-
-exports.filterTasksByStatus = (req, res) => {};
 
 exports.addTask = (req, res) => {
   const { isloggedin, user_id } = req.session;
