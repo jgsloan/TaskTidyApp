@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const editButton = document.querySelectorAll('.edit-task'); // Creates a NodeList of all anchor tags on the page.
   const updateForm = document.querySelector('#updateform'); // Selects the updateform from inside the modal
   const deleteForm = document.querySelector('#deleteform'); // Selects the deleteform from inside the modal
+  const deleteButton = document.getElementById('delete-task-button'); // Select delete button
 
   editButton.forEach((button) => {
     button.addEventListener('click', async (event) => {
@@ -53,12 +54,14 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('edit-task-priority').value = priority_id;
         document.getElementById('edit-task-status').value = status_id;
 
+        // Disable delete button if status is "Completed"
+        if (deleteButton) {
+          deleteButton.disabled = task[0].status_id === 3;
+        }
+
         // Hide delete button if user is not an Admin
         if (role !== 'Admin') {
-          const deleteButton = document.getElementById('deleteform');
-          if (deleteButton) {
-            deleteButton.style.display = 'none';
-          }
+          deleteButton.style.display = 'none';
         }
 
         // Update the form's action attribute with the task ID and sent source page as part of the query

@@ -99,6 +99,29 @@ body {
   overflow-y: auto;
 }
 
+.study-pill {
+  background-color: #4285f4;
+}
+
+.personal-pill {
+  background-color: #a56cc1;
+}
+
+.work-pill {
+  background-color: #f4b400;
+}
+
+.household-pill {
+  background-color: #34a853;
+}
+
+.health-pill {
+  background-color: #ea4335;
+}
+
+.bg-overdue {
+  background-color: #ffcdd2;
+}
 /* Fix header of table */
 Table thead {
   position: sticky;

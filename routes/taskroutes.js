@@ -12,6 +12,7 @@ router.get('/logout', controller.getLogout);
 router.get('/register', controller.getRegister);
 router.get('/sort/:id', controller.getSortedTasks);
 router.get('/filter/:id', controller.filterTasks);
+router.get('/error', controller.geterror);
 router.get('*', controller.get404);
 
 router.post('/addtask', controller.addTask);

@@ -24,7 +24,18 @@
             <div class="card-body">
               <h3 class="card-title mb-3 mt-5"><strong>Sign Up</strong></h3>
               <h5 class="card-title mb-5">
-                Already have an account? <a href="/login">Login</a>
+                <!-- Shoow message if username or email already exist-->
+                <% if (duplicate) { %>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                  <strong><%= duplicate %></strong>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <% } %> Already have an account? <a href="/login">Login</a>
               </h5>
               <form method="post" action="/register">
                 <div class="mb-3">

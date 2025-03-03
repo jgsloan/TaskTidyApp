@@ -28,6 +28,27 @@
         <!-- My Tasks Header -->
         <%- include('mytasksheader') %>
 
+        <!-- Show error if session contains error -->
+        <% if (session.error) { %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <%= session.error %>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+        <% session.error = null; %>
+        <!-- Clear the error after displaying -->
+
+        <% } %> <% if (error) { %>
+        <div class="alert alert-danger">
+          <%= error %>
+          <!-- Display the error message -->
+        </div>
+        <% } %>
+
         <!-- Tasks Board Section -->
         <div class="row mt-4">
           <!-- Split Tasks into status columns -->
@@ -209,5 +230,6 @@
     ></script>
 
     <script src="/scripts/edittask.js"></script>
+    <script src="/scripts/addtask.js"></script>
   </body>
 </html>

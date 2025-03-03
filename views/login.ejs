@@ -18,10 +18,27 @@
   </head>
   <body>
     <div class="container-fluid page-container align-content-center">
-      <div class="row">
+      <div class="row d-flex">
         <div class="col-6 d-flex align-items-center">
           <div class="card shadow mx-auto" style="width: 35rem">
             <div class="card-body">
+              <!-- Show error message for wrong login credentials-->
+              <% if (unauthorised) { %>
+              <div
+                class="alert alert-danger alert-dismissible fade show mt-3"
+                role="alert"
+              >
+                <strong><%- unauthorised %></strong>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="alert"
+                  aria-label="Close"
+                ></button>
+              </div>
+
+              <% } %>
+
               <h3 class="card-title mb-3 mt-5"><strong>Login</strong></h3>
               <h5 class="card-title mb-5">
                 Don't have an account yet? <a href="/register">Sign Up</a>
@@ -42,13 +59,31 @@
                   <label for="password" class="col-form-label"
                     ><strong>Password</strong></label
                   >
-                  <input
-                    class="form-control form-control-lg mb-3"
-                    type="password"
-                    placeholder="Enter Password"
-                    name="password"
-                  />
                 </div>
+
+                <!-- Show error if session contains error -->
+                <% if (passwordmatch) { %>
+                <div
+                  class="alert alert-danger alert-dismissible fade show mt-3"
+                  role="alert"
+                >
+                  <strong>Password doesn't match. Please enter password.</strong>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <% } %>
+
+                <input
+                  class="form-control form-control-lg mb-3"
+                  type="password"
+                  placeholder="Enter Password"
+                  name="password"
+                />
+
                 <div class="d-grid mt-5">
                   <button type="submit" class="btn btn-success btn-lg">Login</button>
                 </div>

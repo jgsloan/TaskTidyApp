@@ -6,20 +6,48 @@
   <% var rawdate = new Date(row.task_due_date); %>
   <!-- Create a formatted date variable using the dateformat and rawdate variables -->
   <% var itemdate = new Intl.DateTimeFormat('en-GB', dateformat).format(rawdate); %>
-  <!-- Displays a card of each task on tasks board screen -->
-  <div class="card-body shadow pb-0">
+
+  <!-- get the current date-->
+  <% const currentDate = new Date().toISOString().slice(0, 10); %>
+
+  <!-- check if task is overdue and add a background class to the card-->
+  <% let overdueClass = (row.task_due_date < currentDate && row.status_name !==
+  'Completed') ? "bg-overdue" : ""; %>
+
+  <div class="card-body shadow pb-0 <%= overdueClass %>">
     <div class="card-body d-flex justify-content-between align-items-center mb-2 p-0">
+      <!-- Check priority and applies background CSS depending on priority-->
+      <% if (row.priority_name === 'High') { %>
       <span class="badge rounded-pill text-bg-danger p-2"
         ><i class="bi bi-speedometer me-2"></i><%= row.priority_name%></span
       >
+      <% } else if (row.priority_name === 'Medium') { %>
+      <span class="badge rounded-pill text-bg-warning p-2"
+        ><i class="bi bi-speedometer me-2"></i><%= row.priority_name%></span
+      >
+      <% } else if (row.priority_name === 'Low') { %>
+      <span class="badge rounded-pill text-bg-primary p-2"
+        ><i class="bi bi-speedometer me-2"></i><%= row.priority_name%></span
+      >
+      <% } %>
+
       <span class="justify-content-end"><%= itemdate %></span>
     </div>
     <h5 class="card-title pt-2"><%= row.task_name %></h5>
     <p class="card-text"><%= row.task_description %></p>
     <div class="card-body d-flex justify-content-between align-items-center mb-2 p-0">
-      <span class="badge rounded-pill text-bg-success p-2">
-        <%= row.category_name %></span
-      >
+      <!-- Check category name and applies background CSS depending on category-->
+      <% if (row.category_name === 'Study') { %>
+      <span class="badge rounded-pill study-pill p-2"><%= row.category_name %></span>
+      <% } else if (row.category_name === 'Personal') { %>
+      <span class="badge rounded-pill personal-pill p-2"><%= row.category_name %></span>
+      <% } else if (row.category_name === 'Work') { %>
+      <span class="badge rounded-pill work-pill p-2"><%= row.category_name %></span>
+      <% } else if (row.category_name === 'Household') { %>
+      <span class="badge rounded-pill household-pill p-2"><%= row.category_name %></span>
+      <% } else if (row.category_name === 'Health') { %>
+      <span class="badge rounded-pill health-pill p-2"><%= row.category_name %></span>
+      <% } %>
 
       <div class="d-flex ms-auto">
         <span class="justify-content-end"

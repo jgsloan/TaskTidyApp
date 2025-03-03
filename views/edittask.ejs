@@ -83,11 +83,32 @@
           <button type="submit" class="btn btn-primary">Update</button>
         </div>
       </form>
+
+      <!-- DELETE BUTTON - Disabled when task is completed -->
       <div class="modal-footer">
         <form method="post" action="#" id="deleteform">
-          <button type="submit" class="btn btn-danger">Delete</button>
+          <button type="submit" class="btn btn-danger" id="delete-task-button" disabled>
+            Delete
+          </button>
         </form>
       </div>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const deleteButton = document.getElementById('delete-task-button');
+          const statusField = document.getElementById('edit-task-status');
+
+          if (deleteButton && statusField) {
+            function updateDeleteButton() {
+              const selectedStatus = parseInt(statusField.value, 10);
+              deleteButton.disabled = selectedStatus === 3; // Disable button if status is Completed
+            }
+
+            statusField.addEventListener('change', updateDeleteButton);
+            updateDeleteButton(); // Ensure correct state when modal opens
+          }
+        });
+      </script>
     </div>
   </div>
 </div>

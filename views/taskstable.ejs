@@ -20,6 +20,9 @@
     <!-- Defines a date formatting configuration object for use with Intl.DateTimeFormat. -->
     <% const dateformat = { weekday: 'short', year: 'numeric', month: 'short', day:
     'numeric'}; %>
+    <!-- get the current date-->
+    <% const currentDate = new Date().toISOString().slice(0, 10); %>
+
     <div class="container-fluid page-container">
       <div class="row">
         <!-- Sidebar Section -->
@@ -30,6 +33,26 @@
       <div class="col col-md-5 col-lg-7 col-xl-10 main-content">
         <!-- My Tasks Header -->
         <%- include('mytasksheader') %>
+
+        <!-- Show error if session contains error -->
+        <% if (session.error) { %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <%= session.error %>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+        <% session.error = null; %>
+        <!-- Clear the error after displaying -->
+        <% } %> <% if (error) { %>
+        <div class="alert alert-danger">
+          <%= error %>
+          <!-- Display the error message -->
+        </div>
+        <% } %>
 
         <div class="row mt-4">
           <div class="table-container">
@@ -218,7 +241,10 @@
                           >
                         </li>
                         <li>
-                          <a class="dropdown-item" href="/tasktable"
+                          <a
+                            class="dropdown-item"
+                            href="/tasktable"
+                            onclick="updateIcon('bi-funnel')"
                             ><i class="bi bi-ban pe-2 text-danger"></i>Clear Filter</a
                           >
                         </li>
@@ -230,7 +256,12 @@
               </thead>
               <tbody class="table-group-divider">
                 <% var count = 1; %> <% task.forEach((row) => { %>
-                <tr>
+                <!-- check if task is overdue and add a background class to the card-->
+                <% let overdueClass = (row.task_due_date < currentDate && row.status_name
+                !== 'Completed') ? "table-danger" : ""; %>
+
+                <!-- insert a new row into the table for each task -->
+                <tr class="<%= overdueClass %>">
                   <th class="align-middle" scope="row"><%= count ++; %></th>
                   <td class="align-middle"><%= row.task_name %></td>
                   <td class="align-middle"><%= row.task_description %></td>
@@ -260,11 +291,30 @@
                   <td class="align-middle text-center">-</td>
                   <% } %>
 
-                  <td>
-                    <span class="badge rounded-pill text-bg-success p-2"
+                  <td class="align-middle">
+                    <% if (row.category_name === 'Study') { %>
+                    <span class="badge rounded-pill study-pill p-2"
                       ><%= row.category_name %></span
                     >
+                    <% } else if (row.category_name === 'Personal') { %>
+                    <span class="badge rounded-pill personal-pill p-2"
+                      ><%= row.category_name %></span
+                    >
+                    <% } else if (row.category_name === 'Work') { %>
+                    <span class="badge rounded-pill work-pill p-2"
+                      ><%= row.category_name %></span
+                    >
+                    <% } else if (row.category_name === 'Household') { %>
+                    <span class="badge rounded-pill household-pill p-2"
+                      ><%= row.category_name %></span
+                    >
+                    <% } else if (row.category_name === 'Health') { %>
+                    <span class="badge rounded-pill health-pill p-2"
+                      ><%= row.category_name %></span
+                    >
+                    <% } %>
                   </td>
+
                   <td class="align-middle">
                     <% if (row.priority_name === 'High') { %>
                     <span class="badge rounded-pill text-bg-danger p-2"
@@ -280,6 +330,7 @@
                     >
                     <% } %>
                   </td>
+
                   <td class="align-middle">
                     <% if (row.status_name === 'Completed') {%>
                     <span class="badge rounded-pill complete p-2 text-dark"
@@ -328,5 +379,6 @@
     ></script>
 
     <script src="/scripts/edittask.js"></script>
+    <script src="/scripts/addtask.js"></script>
   </body>
 </html>

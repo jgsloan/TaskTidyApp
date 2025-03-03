@@ -15,12 +15,17 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/mystyles.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"
+      integrity="sha512-ZwR1/gSZM3ai6vCdI+LVF1zSq/5HznD3ZSTk7kajkaj4D292NLuduDCO1c/NT8Id+jE58KYLKT7hXnbtryGmMg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
   </head>
   <body>
     <div class="container-fluid page-container">
       <div class="row">
         <!-- Sidebar Section -->
-        <
         <div class="col-auto p-0 sidebar"><%- include('sidebar') %></div>
       </div>
 
@@ -38,24 +43,28 @@
 
         <div class="row mt-4">
           <div class="col-lg mb-sm-3">
-            <div class="card shadow mx-auto" style="width: 70rem">
+            <div class="card shadow mx-auto" style="width: 80rem; height: 40rem">
               <div class="card-body">
                 <h5 class="card-title text-center mb-3"><strong>Tasks</strong></h5>
-                <div class="vstacked gap-3">
+                <div class="vstack gap-3">
                   <div class="text-bg-light p-3 mt-2 align-middle">
                     <div class="d-flex align-items-center justify-content-between w-100">
                       <div class="d-flex align-items-center">
                         <i class="bi bi-plus-circle-fill pe-4 fs-5 text-info"></i>
-                        <span class="fs-5">Not Started</span>
+                        <span class="fs-5"
+                          ><a
+                            class="text-decoration-none"
+                            href="/filter/<%= session.user_id %>?type=status&filter=Not Started"
+                            >Not Started</a
+                          ></span
+                        >
                       </div>
 
                       <div class="d-flex justify-content-between w-50">
-                        <% var count = 0 %> <% task.forEach((row) => { %> <% if
-                        (row.status_name === 'Not Started') { %> <% count++; %> <% } %> <%
-                        }); %>
-                        <span class="fs-5"><%= count %></span>
-                        <% var percent = Math.round((count / task.length) * 100) %> <% if
-                        (percent > 0) { %>
+                        <% var percent = Math.round((taskCounts["Not Started"] /
+                        task.length) * 100) %>
+                        <span class="fs-5"><%= taskCounts["Not Started"] %></span>
+                        <% if (percent > 0) { %>
                         <span class="fs-5 pe-5">(<%= percent %>%)</span>
                         <% } %>
                       </div>
@@ -68,16 +77,20 @@
                         <i
                           class="bi bi-arrow-right-circle-fill pe-4 fs-5 text-primary"
                         ></i>
-                        <span class="fs-5">In Progress</span>
+                        <span class="fs-5"
+                          ><a
+                            class="text-decoration-none"
+                            href="/filter/<%= session.user_id %>?type=status&filter=In Progress"
+                            >In Progress</a
+                          ></span
+                        >
                       </div>
 
                       <div class="d-flex justify-content-between w-50">
-                        <% var count = 0 %> <% task.forEach((row) => { %> <% if
-                        (row.status_name === 'In Progress') { %> <% count++; %> <% } %> <%
-                        }); %>
-                        <span class="fs-5"><%= count %></span>
-                        <% var percent = Math.round((count / task.length) * 100) %> <% if
-                        (percent > 0) { %>
+                        <% var percent = Math.round((taskCounts["In Progress"] /
+                        task.length) * 100) %>
+                        <span class="fs-5"><%= taskCounts["In Progress"] %></span>
+                        <% if (percent > 0) { %>
                         <span class="fs-5 pe-5">(<%= percent %>%)</span>
                         <% } %>
                       </div>
@@ -88,16 +101,21 @@
                     <div class="d-flex align-items-center justify-content-between w-100">
                       <div class="d-flex align-items-center">
                         <i class="bi-check-circle-fill pe-4 fs-5 text-success"></i>
-                        <span class="fs-5">Completed</span>
+                        <span class="fs-5"
+                          ><a
+                            class="text-decoration-none"
+                            href="/filter/<%=
+                          session.user_id %>?type=status&filter=Completed"
+                            >Completed</a
+                          ></span
+                        >
                       </div>
 
                       <div class="d-flex justify-content-between w-50">
-                        <% var count = 0 %> <% task.forEach((row) => { %> <% if
-                        (row.status_name === 'Completed') { %> <% count++; %> <% } %> <%
-                        }); %>
-                        <span class="fs-5"><%= count %></span>
-                        <% var percent = Math.round((count / task.length) * 100) %> <% if
-                        (percent > 0) { %>
+                        <% var percent = Math.round((taskCounts.Completed / task.length) *
+                        100) %>
+                        <span class="fs-5"><%= taskCounts.Completed %></span>
+                        <% if (percent > 0) { %>
                         <span class="fs-5 pe-5">(<%= percent %>%)</span>
                         <% } %>
                       </div>
@@ -108,16 +126,21 @@
                     <div class="d-flex align-items-center justify-content-between w-100">
                       <div class="d-flex align-items-center">
                         <i class="bi bi-x-circle-fill pe-4 fs-5 text-secondary"></i>
-                        <span class="fs-5">Cancelled</span>
+                        <span class="fs-5"
+                          ><a
+                            class="text-decoration-none"
+                            href="/filter/<%=
+                          session.user_id %>?type=status&filter=Cancelled"
+                            >Cancelled</a
+                          ></span
+                        >
                       </div>
 
                       <div class="d-flex justify-content-between w-50">
-                        <% var count = 0 %> <% task.forEach((row) => { %> <% if
-                        (row.status_name === 'Cancelled') { %> <% count++; %> <% } %> <%
-                        }); %>
-                        <span class="fs-5"><%= count %></span>
-                        <% var percent = Math.round((count / task.length) * 100) %> <% if
-                        (percent > 0) { %>
+                        <% var percent = Math.round((taskCounts.Cancelled / task.length) *
+                        100) %>
+                        <span class="fs-5"><%= taskCounts.Cancelled %></span>
+                        <% if (percent > 0) { %>
                         <span class="fs-5 pe-5">(<%= percent %>%)</span>
                         <% } %>
                       </div>
@@ -147,9 +170,7 @@
                     </div>
                   </div>
                   <div class="d-flex justify-content-end">
-                    <a type="button" class="btn btn-lg btn-primary mt-2" href="/taskboard"
-                      >See More</a
-                    >
+                    <a class="btn btn-lg btn-primary mt-3" href="/taskboard">See More</a>
                   </div>
                 </div>
               </div>
@@ -157,13 +178,52 @@
           </div>
 
           <div class="col-lg mb-sm-3">
-            <div class="card shadow mx-auto" style="width: 70rem">
-              <p>test</p>
+            <div
+              class="card shadow mx-auto justify-content-center align-items-center"
+              style="width: 80rem; height: 40rem"
+            >
+              <div id="canvasDiv1" style="height: 40rem; width: 40rem">
+                <canvas id="bkgcanvas1"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg mb-sm-3" style="width: 100%">
+            <div
+              class="card shadow mx-auto justify-content-center align-items-center"
+              style="width: 100%"
+            >
+              <div id="canvasDiv2">
+                <canvas id="bkgcanvas2" style="width: 162rem; height: 40rem"></canvas>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Data for task doughnut -->
+    <script>
+      const myJSONdata = `<%- JSON.stringify(taskCounts) || [] %>`;
+      console.log(myJSONdata);
+      const newData = JSON.parse(myJSONdata);
+      console.log(newData);
+
+      const counts = [
+        newData['Not Started'],
+        newData['In Progress'],
+        newData.Completed,
+        newData.Cancelled,
+      ];
+    </script>
+
+    <!-- Data for line chart -->
+    <script>
+      const myJSONdata2 = `<%- JSON.stringify(completionData) || [] %>`;
+      console.log(`logging raw data`, myJSONdata2);
+      const newData2 = JSON.parse(myJSONdata2);
+      console.log(`logging parsed data`, newData2);
+    </script>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -172,6 +232,6 @@
     ></script>
 
     <script src="/scripts/edittask.js"></script>
-    <script src="/scripts/sidebar.js"></script>
+    <script src="/scripts/charts.js"></script>
   </body>
 </html>
